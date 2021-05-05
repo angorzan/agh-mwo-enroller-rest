@@ -27,17 +27,17 @@ public class MeetingRestController {
         Collection<Meeting> meetings = meetingService.getAll();
         return new ResponseEntity<Collection<Meeting>>(meetings, HttpStatus.OK);
     }
-//
-//    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-//    public ResponseEntity<?> getParticipant(@PathVariable("id") String login) {
-//        Participant participant = participantService.findByLogin(login);
-//        if (participant == null) {
-//            return new ResponseEntity(HttpStatus.NOT_FOUND);
-//        }
-//
-//        return new ResponseEntity<Participant>(participant, HttpStatus.OK);
-//    }
-//
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.GET)
+    public ResponseEntity<?> getMeeting(@PathVariable("id") long id) {
+        Meeting meeting = meetingService.findById(id);
+        if (meeting == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+
+        return new ResponseEntity<Meeting>(meeting, HttpStatus.OK);
+    }
+
 //    // POST http://localhost:8080/participants
 //    @RequestMapping(value = "", method = RequestMethod.POST)
 //    public ResponseEntity<?> registerParticipant(@RequestBody Participant participant) {
