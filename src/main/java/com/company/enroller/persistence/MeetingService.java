@@ -29,4 +29,10 @@ public class MeetingService {
         return meeting;
     }
 
+    public void add(Meeting meeting) {
+        Transaction transaction = this.connector.getSession().beginTransaction();
+        connector.getSession().save(meeting);
+        transaction.commit();
+    }
+
 }

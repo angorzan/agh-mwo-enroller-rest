@@ -38,18 +38,18 @@ public class MeetingRestController {
         return new ResponseEntity<Meeting>(meeting, HttpStatus.OK);
     }
 
-//    // POST http://localhost:8080/participants
-//    @RequestMapping(value = "", method = RequestMethod.POST)
-//    public ResponseEntity<?> registerParticipant(@RequestBody Participant participant) {
-//        if (participantService.findByLogin(participant.getLogin()) != null) {
-//            return new ResponseEntity<String>(
-//                    "Unable to create particpant with login '" + participant.getLogin() + " 'already exists",
-//                    HttpStatus.CONFLICT);
-//        }
-//        participantService.add(participant);
-//        return new ResponseEntity<Participant>(participant, HttpStatus.CREATED);
-//    }
-//
+    // POST http://localhost:8080/meetings
+    @RequestMapping(value = "", method = RequestMethod.POST)
+    public ResponseEntity<?> addMeeting(@RequestBody Meeting meeting) {
+        if (meetingService.findById(meeting.getId()) != null) {
+            return new ResponseEntity<String>(
+                    "Unable to create meeting with id '" + meeting.getId() + " 'already exists",
+                    HttpStatus.CONFLICT);
+        }
+        meetingService.add(meeting);
+        return new ResponseEntity<Meeting>(meeting, HttpStatus.CREATED);
+    }
+
 // // DELETE http://localhost:8080/participants
 //    @RequestMapping(value ="/{id}", method = RequestMethod.DELETE)
 //    public ResponseEntity<?> deleteParticipant(@PathVariable("id") String login) {
