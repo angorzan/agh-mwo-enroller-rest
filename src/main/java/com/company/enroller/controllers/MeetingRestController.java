@@ -50,18 +50,18 @@ public class MeetingRestController {
         return new ResponseEntity<Meeting>(meeting, HttpStatus.CREATED);
     }
 
-// // DELETE http://localhost:8080/participants
-//    @RequestMapping(value ="/{id}", method = RequestMethod.DELETE)
-//    public ResponseEntity<?> deleteParticipant(@PathVariable("id") String login) {
-//        Participant participant = participantService.findByLogin(login);
-//        if (participant == null) {
-//            return new ResponseEntity<String>(
-//                    "Unable to remove participant with login '" + participant.getLogin() + " 'not exist yet",
-//                    HttpStatus.NOT_FOUND);
-//        }
-//        participantService.remove(participant);
-//        return new ResponseEntity<Participant>(participant, HttpStatus.OK);
-//    }
-//
+ // DELETE http://localhost:8080/meetings
+    @RequestMapping(value ="/{id}", method = RequestMethod.DELETE)
+    public ResponseEntity<?> deleteMeeting(@PathVariable("id") long id) {
+        Meeting meeting = meetingService.findById(id);
+        if (meeting == null) {
+            return new ResponseEntity<String>(
+                    "Unable to remove meeting with id '" + meeting.getId() + " 'not exist yet",
+                    HttpStatus.NOT_FOUND);
+        }
+        meetingService.remove(meeting);
+        return new ResponseEntity<Meeting>(meeting, HttpStatus.OK);
+    }
+
     
 }
