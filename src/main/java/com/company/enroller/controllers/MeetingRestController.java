@@ -32,7 +32,7 @@ public class MeetingRestController {
     public ResponseEntity<?> getMeeting(@PathVariable("id") long id) {
         Meeting meeting = meetingService.findById(id);
         if (meeting == null) {
-            return new ResponseEntity<String>("Unable to find meeting with id" + id, HttpStatus.NOT_FOUND););
+            return new ResponseEntity<String>("Unable to find meeting with id" + id, HttpStatus.NOT_FOUND);
         }
 
         return new ResponseEntity<Meeting>(meeting, HttpStatus.OK);
@@ -96,11 +96,4 @@ public class MeetingRestController {
         meeting.removeParticipant(participant);
         return new ResponseEntity<Meeting>(meeting, HttpStatus.OK);
     }
-
-    
-    // get dodac
-
-//hql
-//dodac funkcję w serwisie wyszukująca po tytule etc
-
 }
