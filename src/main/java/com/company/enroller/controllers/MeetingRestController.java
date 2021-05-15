@@ -23,7 +23,7 @@ public class MeetingRestController {
     MeetingService meetingService;
 
     @RequestMapping(value = "", method = RequestMethod.GET)
-    public ResponseEntity<?> getMeetings() {
+    public ResponseEntity<?> getAllMeetings() {
         Collection<Meeting> meetings = meetingService.getAll();
         return new ResponseEntity<Collection<Meeting>>(meetings, HttpStatus.OK);
     }
@@ -49,16 +49,14 @@ public class MeetingRestController {
         return new ResponseEntity<Meeting>(meeting, HttpStatus.CREATED);
     }
 
-    // DELETE http://localhost:8080/meetings
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
-    public ResponseEntity<?> deleteMeeting(@PathVariable("id") long id) {
+    public ResponseEntity<?> deleteMeeting(@PathVariable("id") Long id) {
         Meeting meeting = meetingService.findById(id);
-        if (meeting == null) {
-            return new ResponseEntity<String>(
-                    "Unable to remove meeting with id '" + id + " 'not exist yet", HttpStatus.NOT_FOUND);
-        }
+        if (meeting == null) { 
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        } 
         meetingService.remove(meeting);
-        return new ResponseEntity<Meeting>(meeting, HttpStatus.OK);
+        return new ResponseEntity<Meeting>(meeting, HttpStatus.NO_CONTENT); 
     }
 
     // POST http://localhost:8080/meetings
@@ -85,7 +83,7 @@ public class MeetingRestController {
     }
 
     // DELETE http://localhost:8080/meetings
-    @RequestMapping(value = "/{id}", method = RequestMethod.POST)
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
     public ResponseEntity<?> removeParticicpantFromMeeting(@PathVariable("id") long id,
             @RequestBody Participant participant) {
         Meeting meeting = meetingService.findById(id);
@@ -95,5 +93,32 @@ public class MeetingRestController {
         }
         meeting.removeParticipant(participant);
         return new ResponseEntity<Meeting>(meeting, HttpStatus.OK);
+    }
+    @RequestMapping(value="/{id}/title", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateMeetingTitle(@PathVariable("id") Long id, @RequestBody String title){
+        Meeting meeting = meetingService.findById(id);
+        if (meeting==null) {
+            return new ResponseEntity<String>("Unable to find meeting with id '" + id, HttpStatus.NOT_FOUND);
+        }
+        meetingService.updateTitle(meeting, title);
+        return new ResponseEntity<Meeting>(meeting, HttpStatus.CREATED);
+    }
+    @RequestMapping(value="/{id}/description", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateMeetingDescription(@PathVariable("id") Long id, @RequestBody String description){
+        Meeting meeting = meetingService.findById(id);
+        if (meeting==null) {
+            return new ResponseEntity<String>("Unable to find meeting with id '" + id, HttpStatus.NOT_FOUND);
+        }
+        meetingService.updateDescription(meeting, description);
+        return new ResponseEntity<Meeting>(meeting, HttpStatus.CREATED);
+    }
+    @RequestMapping(value="/{id}/date", method = RequestMethod.PUT)
+    public ResponseEntity<?> updateMeetingDate(@PathVariable("id") Long id, @RequestBody String date){
+        Meeting meeting = meetingService.findById(id);
+        if (meeting==null) {
+            return new ResponseEntity<String>("Unable to find meeting with id '" + id, HttpStatus.NOT_FOUND);
+        }
+        meetingService.updateDate(meeting, date);
+        return new ResponseEntity<Meeting>(meeting, HttpStatus.CREATED);
     }
 }
