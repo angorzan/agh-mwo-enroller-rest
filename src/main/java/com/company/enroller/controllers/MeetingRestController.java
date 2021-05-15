@@ -83,7 +83,7 @@ public class MeetingRestController {
     }
 
     // DELETE http://localhost:8080/meetings
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    @RequestMapping(value = "/{id}/participants", method = RequestMethod.DELETE)
     public ResponseEntity<?> removeParticicpantFromMeeting(@PathVariable("id") long id,
             @RequestBody Participant participant) {
         Meeting meeting = meetingService.findById(id);
